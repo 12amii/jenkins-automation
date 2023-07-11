@@ -2,13 +2,12 @@ data "aws_availability_zones" "azs" {}
 
 module "jenkins-server-vpc" {
   source = "terraform-aws-modules/vpc/aws"
-
   name = "jenkins-server-vpc"
   cidr = var.vpc_cidr_block
 
-  azs             = data.aws_availability_zones.azs.names
-  private_subnets = var.private_subnets_cidr_blocks
-    public_subnets  = var.public_subnets_cidr_blocks
+  azs            = data.aws_availability_zones.azs.names
+  private_subnets = var.private_subnet_cidr_blocks
+    public_subnets  = var.public_subnet_cidr_blocks
   enable_nat_gateway = true
   enable_vpn_gateway = true
   enable_dns_hostnames = true
@@ -29,7 +28,7 @@ module "jenkins-server-vpc" {
 
 
 module "eks" {
-source = "terraform-aws-modules/eks/aws"
+ source = "terraform-aws-modules/eks/aws"
 version = "~> 19.0"
 cluster_name    = "jenkins-server-eks-cluster"
   cluster_version = "1.24"
